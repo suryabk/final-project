@@ -7,7 +7,7 @@ import (
 )
 
 func GetAllProject(db *sql.DB) (results []structs.Project, err error) {
-	sql := "SELECT * FROM books"
+	sql := "SELECT * FROM projects"
 
 	rows, err := db.Query(sql)
 	if err != nil {
