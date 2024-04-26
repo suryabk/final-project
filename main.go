@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"final-project/controllers"
 	"final-project/database"
+	"final-project/middleware"
 	"fmt"
 	"os"
 
@@ -49,7 +50,9 @@ func main() {
 	defer DB.Close()
 
 	router := gin.Default()
-
+	router.GET("/", func(c *gin.Context) {
+		c.File("index.html")
+	})
 	router.POST("/register", controllers.RegisterHandler)
 	router.POST("/login", controllers.LoginHandler)
 
@@ -59,13 +62,13 @@ func main() {
 	router.DELETE("/task-status/:id", controllers.DeleteTaskStatus)
 
 	router.GET("/task", controllers.GetAllTask)
-	router.POST("/task", controllers.InsertTask)
-	router.PUT("/task/:id", controllers.UpdateTask)
+	router.POST("/task", middleware.MiddlewareAuth(), controllers.InsertTask)
+	router.PUT("/task/:id", middleware.MiddlewareAuth(), controllers.UpdateTask)
 	router.DELETE("/task/:id", controllers.DeleteTask)
 
 	router.GET("/project", controllers.GetAllProject)
-	router.POST("/project", controllers.InsertProject)
-	router.PUT("/project/:id", controllers.UpdateProject)
+	router.POST("/project", middleware.MiddlewareAuth(), controllers.InsertProject)
+	router.PUT("/project/:id", middleware.MiddlewareAuth(), controllers.UpdateProject)
 	router.DELETE("/project/:id", controllers.DeleteProject)
 
 	// router.Run("localhost:8080")
