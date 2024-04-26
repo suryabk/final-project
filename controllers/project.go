@@ -38,7 +38,7 @@ func InsertProject(c *gin.Context) {
 		panic(err)
 	}
 
-	userIDInterface, exists := c.Get("userID")
+	userIDInterface, exists := c.Get("user_id")
 	if !exists {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
 		return
@@ -53,8 +53,8 @@ func InsertProject(c *gin.Context) {
 		ProjectName: input.ProjectName,
 		Description: input.Description,
 		Budget:      input.Budget,
-		Deadline:    input.Deadline,
-		CreatedBy:   userID,
+		// Deadline:    input.Deadline,
+		CreatedBy: userID,
 	}
 
 	err = repository.InsertProject(database.DbConnection, project)
@@ -76,7 +76,7 @@ func UpdateProject(c *gin.Context) {
 		panic(err)
 	}
 
-	userIDInterface, exists := c.Get("userID")
+	userIDInterface, exists := c.Get("user_id")
 	if !exists {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
 		return
@@ -91,8 +91,8 @@ func UpdateProject(c *gin.Context) {
 		ProjectName: input.ProjectName,
 		Description: input.Description,
 		Budget:      input.Budget,
-		Deadline:    input.Deadline,
-		CreatedBy:   userID,
+		// Deadline:    input.Deadline,
+		CreatedBy: userID,
 	}
 
 	project.ProjectID = int(id)
