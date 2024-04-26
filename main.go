@@ -23,6 +23,44 @@ var (
 	err error
 )
 
+// var jwtKey = []byte("SECRET")
+
+// type Claims struct {
+// 	Username string `json:"username"`
+// 	jwt.RegisteredClaims
+// }
+
+// // RegisterHandler menangani pendaftaran pengguna baru
+// func RegisterHandler(c *gin.Context) {
+// 	var user structs.User
+// 	if err := c.BindJSON(&user); err != nil {
+// 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+// 		return
+// 	}
+
+// 	users[user.Username] = user.Password
+// 	c.Status(http.StatusCreated)
+// }
+
+// // LoginHandler menangani proses login pengguna
+// func LoginHandler(c *gin.Context) {
+// 	var user User
+// 	if err := c.BindJSON(&user); err != nil {
+// 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+// 		return
+// 	}
+
+// 	password, ok := users[user.Username]
+// 	if !ok || password != user.Password {
+// 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid username or password"})
+// 		return
+// 	}
+
+// 	token := GenerateToken(user.Username)
+// 	c.Header("Authorization", "Bearer "+token)
+// 	c.Status(http.StatusOK)
+// }
+
 func main() {
 	// err = godotenv.Load("config/.env")
 	// if err != nil {
@@ -67,19 +105,6 @@ func main() {
 	// router.Run(":" + os.Getenv("PORT"))
 }
 
-// package main
-
-// import (
-// 	"net/http"
-// 	"strings"
-// 	"time"
-
-// 	"github.com/gin-gonic/gin"
-// 	"github.com/golang-jwt/jwt/v5"
-// )
-
-// var jwtKey = []byte("your-secret-key")
-
 // // User struct represents a user in the system
 // type User struct {
 // 	Username string `json:"username"`
@@ -87,46 +112,11 @@ func main() {
 // }
 
 // // Claims struct digunakan untuk menentukan payload token JWT
-// type Claims struct {
-// 	Username string `json:"username"`
-// 	jwt.RegisteredClaims
-// }
 
 // // Database sementara untuk menyimpan pengguna yang terdaftar
 // var users = map[string]string{
 // 	"user1": "password1",
 // 	"user2": "password2",
-// }
-
-// // RegisterHandler menangani pendaftaran pengguna baru
-// func RegisterHandler(c *gin.Context) {
-// 	var user User
-// 	if err := c.BindJSON(&user); err != nil {
-// 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-// 		return
-// 	}
-
-// 	users[user.Username] = user.Password
-// 	c.Status(http.StatusCreated)
-// }
-
-// // LoginHandler menangani proses login pengguna
-// func LoginHandler(c *gin.Context) {
-// 	var user User
-// 	if err := c.BindJSON(&user); err != nil {
-// 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-// 		return
-// 	}
-
-// 	password, ok := users[user.Username]
-// 	if !ok || password != user.Password {
-// 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid username or password"})
-// 		return
-// 	}
-
-// 	token := GenerateToken(user.Username)
-// 	c.Header("Authorization", "Bearer "+token)
-// 	c.Status(http.StatusOK)
 // }
 
 // // GenerateToken digunakan untuk membuat token JWT
