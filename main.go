@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"final-project/controllers"
 	"final-project/database"
 	"fmt"
 
@@ -21,22 +22,6 @@ var (
 	DB  *sql.DB
 	err error
 )
-
-// // func Auth(c *gin.Context) {
-// // 	uname, pwd, ok := c.Request.BasicAuth()
-// // 	if !ok {
-// // 		c.String(http.StatusUnauthorized, "Username atau Password tidak boleh kosong")
-// // 		c.Abort()
-// // 		return
-// // 	}
-
-// // 	if (uname == "admin" && pwd == "password") || (uname == "editor" && pwd == "secret") {
-// // 		c.Next()
-// // 		return
-// // 	}
-// // 	c.String(http.StatusUnauthorized, "Username atau Password tidak sesuai")
-// // 	c.Abort()
-// // }
 
 func main() {
 	// err = godotenv.Load("config/.env")
@@ -63,16 +48,20 @@ func main() {
 
 	router := gin.Default()
 
-	// router.GET("/categories", controllers.GetAllCategories)
-	// router.POST("/categories", Auth, controllers.InsertCategories)
-	// router.PUT("/categories/:id", Auth, controllers.UpdateCategories)
-	// router.DELETE("/categories/:id", Auth, controllers.DeleteCategories)
-	// router.GET("/categories/:id/books", controllers.ShowCategoriesBook)
+	router.GET("/task-status", controllers.GetAllTaskStatus)
+	router.POST("/task-status", controllers.InsertTaskStatus)
+	router.PUT("/task-status/:id", controllers.UpdateTaskStatus)
+	router.DELETE("/task-status/:id", controllers.DeleteTaskStatus)
 
-	// router.GET("/books", controllers.GetAllBook)
-	// router.POST("/books", Auth, controllers.InsertBook)
-	// router.PUT("/books/:id", Auth, controllers.UpdateBook)
-	// router.DELETE("/books/:id", Auth, controllers.DeleteBook)
+	router.GET("/task", controllers.GetAllTask)
+	router.POST("/task", controllers.InsertTask)
+	router.PUT("/task/:id", controllers.UpdateTask)
+	router.DELETE("/task/:id", controllers.DeleteTask)
+
+	router.GET("/project", controllers.GetAllProject)
+	router.POST("/project", controllers.InsertProject)
+	router.PUT("/project/:id", controllers.UpdateProject)
+	router.DELETE("/project/:id", controllers.DeleteProject)
 
 	router.Run("localhost:8080")
 	// router.Run(":" + os.Getenv("PORT"))

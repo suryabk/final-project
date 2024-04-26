@@ -1,3 +1,6 @@
+-- +migrate Up
+-- +migrate StatementBegin
+
 CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
     email VARCHAR(100) NOT NULL UNIQUE,
@@ -8,13 +11,8 @@ CREATE TABLE users (
 
 CREATE TABLE task_status (
     status_id SERIAL PRIMARY KEY,
-    status_name VARCHAR(20) NOT NULL UNIQUE,
+    status_name VARCHAR(20) NOT NULL UNIQUE
 );
-
-INSERT INTO task_status (status_name) VALUES
-    ('Open'),
-    ('In Progress'),
-    ('Closed'),
 
 CREATE TABLE projects (
     project_id SERIAL PRIMARY KEY,
@@ -33,9 +31,12 @@ CREATE TABLE tasks (
     description TEXT,
     priority VARCHAR(20),
     deadline DATE,
-    status_id INTEGER DEFAULT 1 REFERENCES task_status(status_id), -- Nilai default 'Open'
+    status_id INTEGER REFERENCES task_status(status_id), 
     assigned_to INTEGER REFERENCES users(user_id),
     project_id INTEGER REFERENCES projects(project_id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+
+-- +migrate StatementEnd
