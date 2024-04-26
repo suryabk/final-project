@@ -3,13 +3,14 @@ package middleware
 import (
 	"final-project/structs"
 	"net/http"
-	"os"
 	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 )
+
+var jwtKey = []byte("SECRET")
 
 func MiddlewareAuth() gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -25,7 +26,7 @@ func MiddlewareAuth() gin.HandlerFunc {
 
 		// Memverifikasi token JWT
 		token, err := jwt.ParseWithClaims(tokenString, &structs.Claims{}, func(token *jwt.Token) (interface{}, error) {
-			return os.Getenv("JWTKEY"), nil
+			return jwtKey, nil
 		})
 
 		if err != nil || !token.Valid {
@@ -40,12 +41,13 @@ func MiddlewareAuth() gin.HandlerFunc {
 func GenerateToken(userID int, email string) string {
 	expirationTime := time.Now().Add(24 * time.Hour) // Token berlaku selama 24 jam
 	claims := structs.Claims{
-		Email: email,
+		UserID: userID,
+		Email:  email,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(expirationTime),
 		},
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	tokenString, _ := token.SignedString(os.Getenv("JWTKEY"))
+	tokenString, _ := token.SignedString(jwtKey)
 	return tokenString
 }
