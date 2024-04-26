@@ -18,7 +18,7 @@ func GetAllTaskStatus(db *sql.DB) (results []structs.TaskStatus, err error) {
 	for rows.Next() {
 		var taskStatus = structs.TaskStatus{}
 
-		err := rows.Scan(&taskStatus.StatusID, taskStatus.StatusName)
+		err := rows.Scan(&taskStatus.StatusID, &taskStatus.StatusName)
 		if err != nil {
 			panic(err)
 		}
@@ -30,8 +30,8 @@ func GetAllTaskStatus(db *sql.DB) (results []structs.TaskStatus, err error) {
 }
 
 func InsertTaskStatus(db *sql.DB, status structs.TaskStatus) (err error) {
-	sql := "INSERT INTO task_status (status_id, status_name) VALUES ($1, $2)"
-	errs := db.QueryRow(sql, status.StatusID, status.StatusName)
+	sql := "INSERT INTO task_status (status_name) VALUES ($1)"
+	errs := db.QueryRow(sql, status.StatusName)
 
 	return errs.Err()
 }
