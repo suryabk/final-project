@@ -31,7 +31,7 @@ CREATE TABLE tasks (
     task_id SERIAL PRIMARY KEY,
     task_name VARCHAR(100) NOT NULL,
     description TEXT,
-    priority INT,
+    priority VARCHAR(20),
     deadline DATE,
     status_id INTEGER DEFAULT 1 REFERENCES task_status(status_id), -- Nilai default 'Open'
     assigned_to INTEGER REFERENCES users(user_id),
