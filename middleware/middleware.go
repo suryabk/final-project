@@ -25,7 +25,8 @@ func MiddlewareAuth() gin.HandlerFunc {
 		tokenString = strings.Replace(tokenString, "Bearer ", "", 1)
 
 		// Memverifikasi token JWT
-		token, err := jwt.ParseWithClaims(tokenString, &structs.Claims{}, func(token *jwt.Token) (interface{}, error) {
+		claims := &structs.Claims{}
+		token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
 			return jwtKey, nil
 		})
 
@@ -33,6 +34,8 @@ func MiddlewareAuth() gin.HandlerFunc {
 			c.AbortWithStatus(http.StatusUnauthorized)
 			return
 		}
+
+		c.Set("user_id", claims.UserID)
 
 		c.Next()
 	}
