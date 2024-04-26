@@ -38,7 +38,7 @@ func InsertProject(db *sql.DB, project structs.Project) (err error) {
 }
 
 func UpdateProject(db *sql.DB, project structs.Project) (err error) {
-	sql := "UPDATE projects SET project_name = $1, description = $2, budget = $3, deadline = $4, created_by = $5, updated_at = $6,  WHERE id = $7"
+	sql := "UPDATE projects SET project_name = $1, description = $2, budget = $3, deadline = $4, created_by = $5, updated_at = $6 WHERE id = $7"
 	errs := db.QueryRow(sql, project.ProjectName, project.Description, project.Budget, project.Deadline, project.CreatedBy, time.Now(), project.ProjectID)
 
 	return errs.Err()
