@@ -5,19 +5,20 @@ import (
 	"final-project/controllers"
 	"final-project/database"
 	"fmt"
+	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
 
-const (
-	host     = "localhost"
-	port     = 5432
-	user     = "postgres"
-	password = "postgres"
-	dbname   = "final-project"
-)
+// const (
+// 	host     = "localhost"
+// 	port     = 5432
+// 	user     = "postgres"
+// 	password = "postgres"
+// 	dbname   = "final-project"
+// )
 
 var (
 	DB  *sql.DB
@@ -70,8 +71,8 @@ func main() {
 		fmt.Println("success read file environment")
 	}
 
-	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
-	// psqlInfo := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", os.Getenv("PGHOST"), os.Getenv("PGPORT"), os.Getenv("PGUSER"), os.Getenv("PGPASSWORD"), os.Getenv("PGDATABASE"))
+	// psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
+	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", os.Getenv("PGHOST"), os.Getenv("PGPORT"), os.Getenv("PGUSER"), os.Getenv("PGPASSWORD"), os.Getenv("PGDATABASE"))
 
 	DB, err = sql.Open("postgres", psqlInfo)
 	err = DB.Ping()
@@ -102,8 +103,8 @@ func main() {
 	router.PUT("/project/:id", controllers.UpdateProject)
 	router.DELETE("/project/:id", controllers.DeleteProject)
 
-	router.Run("localhost:8080")
-	// router.Run(":" + os.Getenv("PORT"))
+	// router.Run("localhost:8080")
+	router.Run(":" + os.Getenv("PORT"))
 }
 
 // // User struct represents a user in the system
